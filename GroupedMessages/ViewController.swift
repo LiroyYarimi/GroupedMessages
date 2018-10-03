@@ -8,16 +8,29 @@
 
 import UIKit
 
+struct ChatMessage {
+    let text: String
+    let isComing: Bool
+}
+
 class ViewController: UITableViewController {
     
     fileprivate let cellId = "id"
     
-    let textMessages = [
-        "Here's my very fisrt message",
-        "We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line",
-        "We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line, We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line , We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line"
-        ,"great!"
+    let chatMessages = [
+        ChatMessage(text: "Here's my very firsy message", isComing: true),
+        ChatMessage(text: "We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line", isComing: true),
+        ChatMessage(text: "We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line, We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line , We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line", isComing: false),
+        ChatMessage(text: "great!", isComing: true),
+
     ]
+    
+//    let textMessages = [
+//        "Here's my very fisrt message",
+//        "We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line",
+//        "We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line, We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line , We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line"
+//        ,"great!"
+//    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,22 +40,25 @@ class ViewController: UITableViewController {
         
         tableView.register(ChatMessageCell.self, forCellReuseIdentifier: cellId)
         tableView.separatorStyle = .none //delete the separator line
+        tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return textMessages.count
+        return chatMessages.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ChatMessageCell
-//        cell.textLabel?.text = "We want to provide a longer string that is actually going to wrap onto the next line and maybe even a third line"
-
-//        cell.textLabel?.numberOfLines = 0//make the cell size dynamic
         
-        cell.messageLabel.text = textMessages[indexPath.row]
+        let chatMessage = chatMessages[indexPath.row]
+
+//        cell.messageLabel.text = chatMessage.text
+//        cell.isIncoming = chatMessage.isComing
+        
+        cell.chatMessage = chatMessage
         
         return cell
     }
